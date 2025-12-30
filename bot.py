@@ -589,18 +589,14 @@ async def handle_interaction(update: Update, context: ContextTypes.DEFAULT_TYPE)
                 target_game.players[target_id].curses_received.append(user_id)
                 await query.edit_message_text(f"✅ The chill of the grave touches {target_game.players[target_id].name}")
 
-if __name__ == "__main__":
+def main():
     import os
     from telegram.ext import ApplicationBuilder
 
-   TOKEN = os.getenv("BOT_TOKEN")
+    TOKEN = os.getenv("BOT_TOKEN")
 
-print("DEBUG ENV VARS:", dict(os.environ))
-print("DEBUG BOT_TOKEN:", TOKEN)
-
-if not TOKEN:
-    print("❌ BOT_TOKEN IS NONE")
-    exit(1)
+    if not TOKEN:
+        raise RuntimeError("BOT_TOKEN environment variable not set")
 
     app = ApplicationBuilder().token(TOKEN).build()
 
@@ -614,3 +610,7 @@ if not TOKEN:
 
     print("🔥 Oaths & Ashes System Online...")
     app.run_polling()
+
+
+if __name__ == "__main__":
+    main()
