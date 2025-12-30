@@ -593,11 +593,14 @@ if __name__ == "__main__":
     import os
     from telegram.ext import ApplicationBuilder
 
-    TOKEN = os.getenv("BOT_TOKEN")
+   TOKEN = os.getenv("BOT_TOKEN")
 
-    if not TOKEN:
-        print("❌ BOT_TOKEN environment variable not set")
-        exit(1)
+print("DEBUG ENV VARS:", dict(os.environ))
+print("DEBUG BOT_TOKEN:", TOKEN)
+
+if not TOKEN:
+    print("❌ BOT_TOKEN IS NONE")
+    exit(1)
 
     app = ApplicationBuilder().token(TOKEN).build()
 
