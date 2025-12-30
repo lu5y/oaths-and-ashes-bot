@@ -589,14 +589,14 @@ async def handle_interaction(update: Update, context: ContextTypes.DEFAULT_TYPE)
                 target_game.players[target_id].curses_received.append(user_id)
                 await query.edit_message_text(f"✅ The chill of the grave touches {target_game.players[target_id].name}")
 
-if __name__ == "__main__":
-    TOKEN = os.getenv("BOT_TOKEN", "YOUR_BOT_TOKEN_HERE")
-    if TOKEN == "YOUR_BOT_TOKEN_HERE":
-        print("⚠️  ERROR: Set BOT_TOKEN environment variable or edit script.")
-        exit(1)
+def main():
+    TOKEN = os.getenv("BOT_TOKEN")
+
+    if not TOKEN:
+        raise RuntimeError("BOT_TOKEN environment variable not set")
 
     app = ApplicationBuilder().token(TOKEN).build()
-    
+
     app.add_handler(CommandHandler("start", cmd_start))
     app.add_handler(CommandHandler("join", cmd_join))
     app.add_handler(CommandHandler("flee", cmd_flee))
@@ -605,6 +605,9 @@ if __name__ == "__main__":
     app.add_handler(CommandHandler("leaderboard", cmd_leaderboard))
     app.add_handler(CallbackQueryHandler(handle_interaction))
 
-
-    print("🦅 Oaths & Ashes System Online...")
+    print("🔥 Oaths & Ashes System Online...")
     app.run_polling()
+
+
+if __name__ == "__main__":
+    main()
