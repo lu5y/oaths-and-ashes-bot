@@ -554,7 +554,35 @@ async def cmd_stats(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def cmd_leaderboard(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_markdown(db.get_leaderboard())
+async def cmd_rules(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    text = (
+        "📜 **THE LAWS OF OATHS & ASHES**\n\n"
+        "**1. The Goal**\n"
+        "Survive. The last player with Standing (HP) > 0 is the Sovereign.\n\n"
+        "**2. The Round**\n"
+        "Every round, you are paired with another player. You must choose:\n"
+        "• 🤝 **TRUST:** You both gain **+10**.\n"
+        "• 🗡️ **BETRAY:** You steal **+15**, they lose **-15**.\n"
+        "• ⚔️ **CLASH:** If both Betray, you both lose **-10**.\n"
+        "• 💤 **SLEEP:** If you miss the vote, you lose **-5**.\n\n"
+        "**3. The Dead (Ash)**\n"
+        "If you hit 0 HP, you die. Dead players can **Curse** the living to halve their gains.\n\n"
+        "*Trust is a currency spent only once.*"
+    )
+    await update.message.reply_markdown(text)
 
+async def cmd_roles(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    text = (
+        "🎭 **THE SOVEREIGN ROLES**\n"
+        "Your role is assigned secretly at the start.\n\n"
+        "🔥 **Cinder Oracle:** Trusts gain **2x** Standing.\n"
+        "🏴 **Black Banner:** Betrayals steal an **extra +5**.\n"
+        "🛡️ **Iron Vanguard:** You take **5 less damage** when Clashing.\n"
+        "⚔️ **Crimson Duelist:** You gain an **extra +5** on successful Betrayal.\n"
+        "⚰️ **Gravewarden:** If you lose Standing, you heal **+5** back.\n"
+        "👁️ **Veil Scribe:** You receive Intel revealing your opponent's choice.\n"
+    )
+    await update.message.reply_markdown(text)
 async def handle_interaction(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
     data = query.data
@@ -602,6 +630,8 @@ def main():
 
     app.add_handler(CommandHandler("start", cmd_start))
     app.add_handler(CommandHandler("join", cmd_join))
+    app.add_handler(CommandHandler("rules", cmd_rules))
+    app.add_handler(CommandHandler("roles", cmd_roles))
     app.add_handler(CommandHandler("flee", cmd_flee))
     app.add_handler(CommandHandler("players", cmd_players))
     app.add_handler(CommandHandler("stats", cmd_stats))
